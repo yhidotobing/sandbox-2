@@ -39,6 +39,38 @@
     <h3 v-show="payload.type_book_id">Telah memilih kategori buku</h3>
     <Title :title="payload.name" />
     <Title title="Belajar Vue JS" />
+    <hr />
+    <div class="text-center">
+      <h1 class="h1">{{ increment }}</h1>
+      <button type="button" class="btn btn-primary" @click="tambahIncrement">Tambah</button>
+    </div>
+    <hr />
+    <div class="text-center mt-5">
+      <input type="text" class="form-control" v-model="todo" />
+      <button type="button" class="btn btn-primary" @click="tambahTodo">Tambah</button>
+      <div v-if="isNoTodolist">add todolist</div>
+      <ul>
+        <li v-for="(doing, i) in todolist" :key="i">{{ doing }}</li>
+      </ul>
+    </div>
+    <div class="text-center mt-3">
+      <input type="text" v-model="fullname" placeholder="fullname" class="form-control" />
+      <div>Firstname : {{ firstname }}</div>
+      <div>Lastname : {{ lastname }}</div>
+      <div>Fullname : {{ fullname }}</div>
+    </div>
+    <div class="text-center mt-3">
+      {{ payload2 }}
+      <InputText name="Fullname" :val="payload2.fullname" @get="(newValue) => (this.payload2.fullname = newValue)" />
+      <InputText name="Username" :val="payload2.username" @get="(newValue) => (this.payload2.username = newValue)" />
+      <InputText
+        name="Email"
+        type="email"
+        :val="payload2.email"
+        @get="(newValue) => (this.payload2.email = newValue)"
+      />
+      <InputText name="Password" type="password" />
+    </div>
     <Tutorial />
   </div>
 </template>
@@ -53,6 +85,10 @@ export default {
   },
   data() {
     return {
+      text: "",
+      firstname: "Ghany",
+      lastname: "Ersa",
+      increment: 0,
       nama: "Ghany Abdillah Ersa",
       listNama: ["Fauzan", "Siska", "Yhido", "Nabil", "Aufa"],
       listProvinsi: [
@@ -103,7 +139,45 @@ export default {
         name: "",
         type_book_id: "",
       },
+      payload2: {
+        fullname: "",
+        username: "",
+        email: "",
+      },
+      todo: "",
+
+      todolist: [],
     };
+  },
+  computed: {
+    fullname: {
+      get() {
+        return this.firstname + " " + this.lastname;
+      },
+      // GHANY ABDILLAH
+      set(newValue) {
+        // ["GHANY", "ABDILLAH", " "]
+        const names = newValue.split(" ");
+        this.firstname = names[0];
+        this.lastname = names[names.length - 1];
+      },
+    },
+    isNoTodolist() {
+      return this.todolist.length == 0;
+    },
+    isMatch() {
+      if (this.password == this.passwordConfirm) return "Password Cocok";
+      else return "Password Tidak Cocok";
+    },
+  },
+  methods: {
+    tambahIncrement() {
+      this.increment++;
+    },
+    tambahTodo() {
+      this.todolist.push(this.todo);
+      this.todo = "";
+    },
   },
 };
 </script>
