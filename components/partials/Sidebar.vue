@@ -10,9 +10,12 @@
       </div>
       <ul class="sidebar-menu">
         <li v-for="(sidebar, i) in listMenu" :key="i">
-          <a class="nav-link" href="blank.html"
-            ><i class="far fa-square"></i> <span>{{ sidebar }}</span></a
-          >
+          <!-- <a class="nav-link" href="blank.html">
+            <i class="far fa-square"></i> <span>{{ sidebar }}</span>
+          </a> -->
+          <NuxtLink class="nav-link" :to="sidebar.link">
+            <i :class="sidebar.icon"></i> <span>{{ sidebar.name }}</span>
+          </NuxtLink>
         </li>
       </ul>
 
@@ -29,7 +32,28 @@
 export default {
   data() {
     return {
-      listMenu: ["Dashboard", "Our Class", "My Class", "Presence"],
+      listMenu: [
+        {
+          name: "Dashboard",
+          icon: "fas fa-home",
+          link: "/",
+        },
+        {
+          name: "Our Class",
+          icon: "fas fa-chalkboard-teacher",
+          link: "/class",
+        },
+        {
+          name: "My Class",
+          icon: "fas fa-chalkboard-teacher",
+          link: "/my-class",
+        },
+        {
+          name: "Presence",
+          icon: "fas fa-chalkboard-teacher",
+          link: "/presence",
+        },
+      ],
     };
   },
 };
