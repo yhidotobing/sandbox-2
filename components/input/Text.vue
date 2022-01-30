@@ -2,7 +2,7 @@
   <div class="form-group row">
     <label for="input" class="col-sm-2 col-form-label">{{ name }}</label>
     <div class="col-sm-10">
-      <input :type="type" v-model="value" class="form-control" id="input" />
+      <input :type="type" v-model="value" class="form-control" id="input" required />
     </div>
   </div>
 </template>

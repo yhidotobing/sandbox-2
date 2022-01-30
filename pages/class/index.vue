@@ -1,8 +1,9 @@
 <template>
   <div>
+    <FloatingButton @click.native="$router.push('/class/add')" />
     <div class="row">
       <div v-for="(kelas, i) in listClass" :key="i" class="col-md-4">
-        <NuxtLink :to="'/class/' + kelas.link">
+        <NuxtLink :to="'/class/' + kelas.id">
           <BootstrapCard>
             <template v-slot:header>
               <img :src="kelas.img" alt="" style="height: 200px" />
@@ -20,24 +21,21 @@
 export default {
   data() {
     return {
-      listClass: [
-        {
-          name: "Kelas React JS",
-          img: "https://glints.com/id/lowongan/wp-content/uploads/2020/10/logo-reactjs.jpg",
-          link: "react-js",
-        },
-        {
-          name: "Kelas Vue JS",
-          img: "https://crocodic.com/wp-content/uploads/2019/02/1_nq9cdMxtdhQ0ZGL8OuSCUQ.jpeg",
-          link: "vue-js",
-        },
-        {
-          name: "Kelas Laravel",
-          img: "http://phphostingindonesia.com/wp-content/uploads/2015/04/laravel.jpg",
-          link: "laravel",
-        },
-      ],
+      listClass: [],
     };
+  },
+  created() {
+    this.getListClass();
+  },
+  methods: {
+    async getListClass() {
+      try {
+        const response = await this.$axios.get("/class");
+        this.listClass = response.data.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
