@@ -31,13 +31,9 @@
 <script>
 export default {
   data() {
+    const detailClass = this.$store.state.class.class;
     return {
-      form: {
-        name: "",
-        description: "",
-        startDate: "",
-        endDate: "",
-      },
+      form: detailClass,
     };
   },
   created() {

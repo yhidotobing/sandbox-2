@@ -53,6 +53,11 @@ export default {
           icon: "fas fa-chalkboard-teacher",
           link: "/presence",
         },
+        {
+          name: "State Management",
+          icon: "fas fa-chalkboard-teacher",
+          link: "/state-management",
+        },
       ],
     };
   },
