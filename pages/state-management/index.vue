@@ -25,8 +25,10 @@
 </template>
 <script>
 import Button from "~/components/input/Button.vue";
+import Request from "~/mixins/request.vue";
 export default {
   components: { Button },
+  mixins: [Request],
   data() {
     return {
       //   listClass: this.$store.state.class.classes,
@@ -50,14 +52,18 @@ export default {
       });
       this.$router.push("/class/add");
     },
+    // async getListClass() {
+    //   try {
+    //     const response = await this.$axios.get("/class");
+    //     // this.listClass = response.data.data;
+    //     this.$store.dispatch("class/SET_CLASSES", response.data.data);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     async getListClass() {
-      try {
-        const response = await this.$axios.get("/class");
-        // this.listClass = response.data.data;
-        this.$store.dispatch("class/SET_CLASSES", response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
+      const response = await this.requestGet("/class");
+      if (response) this.$store.dispatch("class/SET_CLASSES", response.data);
     },
     async deleteClass(kelas) {
       try {
