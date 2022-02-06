@@ -58,6 +58,7 @@ export default {
     // https://go.nuxtjs.dev/pwa
     "@nuxtjs/pwa",
     "@nuxtjs/auth-next",
+    "vue-sweetalert2/nuxt",
   ],
   // nuxt auth module
   auth: {
