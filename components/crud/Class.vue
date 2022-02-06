@@ -2,23 +2,23 @@
   <div class="card">
     <div class="card-body">
       <form @submit.prevent="submitData">
-        <InputText name="Nama Kelas" :val="form.name" @get="(newValue) => (this.form.name = newValue)" />
+        <InputText name="Nama Kelas" :val="form.name" @get="(newValue) => this.changeState({ name: newValue })" />
         <InputText
           name="Deskripsi Kelas"
           :val="form.description"
-          @get="(newValue) => (this.form.description = newValue)"
+          @get="(newValue) => this.changeState({ description: newValue })"
         />
         <InputText
           name="Tanggal Mulai"
           type="date"
           :val="form.startDate"
-          @get="(newValue) => (this.form.startDate = newValue)"
+          @get="(newValue) => this.changeState({ startDate: newValue })"
         />
         <InputText
           name="Tanggal Selesai"
           type="date"
           :val="form.endDate"
-          @get="(newValue) => (this.form.endDate = newValue)"
+          @get="(newValue) => this.changeState({ endDate: newValue })"
         />
         <div class="text-right">
           <button type="button" class="btn btn-secondary mr-3" @click="$router.go(-1)">Cancel</button>
@@ -29,12 +29,19 @@
   </div>
 </template>
 <script>
+import Request from "~/mixins/request.vue";
 export default {
-  data() {
-    const detailClass = this.$store.state.class.class;
-    return {
-      form: detailClass,
-    };
+  mixins: [Request],
+  // data() {
+  //   const detailClass = this.$store.state.class.class;
+  //   return {
+  //     form: detailClass,
+  //   };
+  // },
+  computed: {
+    form() {
+      return this.$store.state.class.class;
+    },
   },
   created() {
     if (this.$route.params.id) {
@@ -42,24 +49,39 @@ export default {
     }
   },
   methods: {
-    async getDetail() {
-      try {
-        const response = await this.$axios.get(`/class/${this.$route.params.id}`);
-        this.form = response.data.data;
-      } catch (error) {
-        console.log(error);
-      }
+    changeState(value) {
+      const kelas = { ...this.form, ...value };
+      this.$store.dispatch("class/SET_CLASS", kelas);
     },
+    // async getDetail() {
+    //   try {
+    //     const response = await this.$axios.get(`/class/${this.$route.params.id}`);
+    //     this.form = response.data.data;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+    async getDetail() {
+      const response = await this.requestGet(`/class/${this.$route.params.id}`);
+      this.changeState(response.data);
+    },
+
+    // async tambahKelas() {
+    //   const payload = this.form;
+    //   try {
+    //     const response = await this.$axios.post("/class", payload);
+    //     alert("Data berhasil ditambahkan");
+    //     this.$router.push("/class");
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     async tambahKelas() {
       const payload = this.form;
-      try {
-        const response = await this.$axios.post("/class", payload);
-        alert("Data berhasil ditambahkan");
-        this.$router.push("/class");
-      } catch (error) {
-        console.log(error);
-      }
+      const response = await this.requestPost("/class", payload);
+      if (response) this.$router.push("/class");
     },
+
     async updateKelas() {
       const payload = this.form;
       try {
