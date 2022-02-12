@@ -7,12 +7,18 @@
           <div class="col-md-4">
             <SandboxAdd @get="(newValue) => this.listBuku.push(newValue)" />
             <br />
-            <SandboxListItem :items="listBuku" @get="(newValue) => (this.listBuku = newValue)" />
+            <SandboxListItem
+              :items="listBuku"
+              @get="(newValue) => (this.listBuku = newValue)"
+            />
           </div>
           <div class="col-md-4">
             <SandboxAdd @get="getPembaca" />
             <br />
-            <SandboxListItem :items="listPembaca" @get="(newValue) => (this.listPembaca = newValue)" />
+            <SandboxListItem
+              :items="listPembaca"
+              @get="(newValue) => (this.listPembaca = newValue)"
+            />
           </div>
           <div class="col-md-4">
             <SandboxOption
@@ -21,7 +27,10 @@
               @get="(newValue) => this.listBacaan.push(newValue)"
             />
             <br />
-            <SandboxListItem :items="listBacaan" @get="(newValue) => (this.listBacaan = newValue)" />
+            <SandboxListItem
+              :items="listBacaan"
+              @get="(newValue) => (this.listBacaan = newValue)"
+            />
           </div>
         </div>
       </div>
